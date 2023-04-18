@@ -1,0 +1,50 @@
+
+<div class="card-container">
+
+  <h1 class="logo"> CLIMATEMPO </h1>
+  <h2 class="legenda">Seu app de clima atual</h2>
+    <img src="assets\cloud-mario.png" class="back" alt="" srcset="">
+    <img src="assets\cloud-mario.png" class="back2" alt="" srcset="">
+
+  <div class="card">
+    <div class="search">
+      <form class="form">
+         <mat-icon [ngClass]="{'icone-reset': currentWeather}" class="icone">location_on</mat-icon>
+          <input type="text" (keypress)="search()" type="text" placeholder="Digite o local" aria-label="localidade" [formControl]="locationForm" [matAutocomplete]="auto" class="form-control">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option class="option" *ngFor="let option of options" (click)="getWeather(option)" [value]="option.name.toUpperCase() + ' - ' + option.country.toUpperCase()">
+              {{ option.name }} - {{ option.region }} - {{ option.country }}
+            </mat-option>
+          </mat-autocomplete>
+      </form>
+
+      <div class="atual" *ngIf="currentWeather" [ngClass]="{expandir: currentWeather}">
+        <div class="current" [ngClass]="{'fade-in': currentWeather}">
+          <img [src]="currentIcon" alt="Ícone" />
+            <h1>{{ this.currentWeather.main.temp }}ºC</h1>
+            <h3>{{this.currentWeather.weather[0].description}}</h3>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="currentWeather" class="footer">
+      <div class="icon">
+        <img src="https://i.imgur.com/5ZGw80v.gif" alt="Ícone" />
+        <div>
+          <h4>{{ currentWeather.main.humidity }}%</h4>
+          <h3>Umidade do ar</h3>
+        </div>
+      </div>
+
+      <div class="icon">
+        <img
+          src="https://arnovo.com.br/wp-content/uploads/2023/01/Design-sem-nome.gif"
+          alt="Ícone"
+        />
+        <div>
+          <h4>{{ currentWeather.wind.speed }}Km/h</h4>
+          <h3>Velocidade do vento</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
